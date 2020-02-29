@@ -10,16 +10,16 @@ public class Main3 {
     private static Language getLanguageByName(String name) {
         switch (name.toLowerCase()) {
             case "java":
-                return new Language("Java", () -> "OOP", () -> "strongly-typed");
+                return new Language<>("Java", () -> "OOP", () -> "strongly-typed");
             case "js":
             case "javascript":
-                return new Language("JavaScript", () -> "Multi-paradigm", () -> "dynamically-ped");
+                return new Language<>("JavaScript", () -> "Multi-paradigm", () -> "dynamically-ped");
             case "python":
-                return new Language("Python", () -> "Multi-paradigm", () -> "dynamically-typed");
+                return new Language<>("Python", () -> "Multi-paradigm", () -> "dynamically-typed");
             case "haskell":
-                return new Language("Haskell",() -> "Functional", () -> "strongly-typed");
+                return new Language<>("Haskell",() -> "Functional", () -> "strongly-typed");
             default:
-                return new Language(name, new Unknown(), new Unknown());
+                return new Language<>(name, new Unknown(), new Unknown());
         }
     }
 }
