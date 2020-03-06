@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
+import java.util.function.IntConsumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -16,14 +16,10 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-//        task3();
         task5();
     }
 
     private static void task1() {
-        Collection<String> c = Collections.EMPTY_LIST;
-        List<String> list = new ArrayList<>(c);
-
         List<Order> orders = Collections.singletonList(new Order(OrderStatus.COMPLETED, 50));
         /*
          * Наиболее очевидное решение, просто читать,
@@ -77,15 +73,17 @@ public class Main {
     }
 
     private static void task3() {
+        /*
+         * For training purposes only
+         */
         Queue<Integer> requestQueue = new ConcurrentLinkedQueue<>();
         Queue<Integer> responseQueue = new ConcurrentLinkedQueue<>();
 
         ExecutorService exec = Executors.newCachedThreadPool();
 
         // request producers
-        Stream.of(1, 2, 3, 4, 5).forEach(client -> exec.execute(() -> {
-                    IntStream.range(1, 100).parallel().forEach(requestQueue::add);
-                })
+        Stream.of(1, 2, 3, 4, 5).forEach(client -> exec.execute(() ->
+                IntStream.range(1, 100).parallel().forEach(requestQueue::add))
         );
 
         // request processors
@@ -96,8 +94,7 @@ public class Main {
                             Optional<Integer> request = Optional.ofNullable(requestQueue.poll());
                             request.ifPresent(item -> responseQueue.offer(item * 2));
                         } catch (InterruptedException e) {
-                            System.out.println("Thread exit");
-                            break;
+                            e.printStackTrace();
                         }
                     }
                 })
@@ -145,10 +142,11 @@ public class Main {
     }
 
     private static void task6() {
-
+        //TODO
+        Map<Long, Long> cache;
     }
 
-    private static void timeIt(Consumer<Integer> action, int count, String name) {
+    private static void timeIt(IntConsumer action, int count, String name) {
         long start = System.currentTimeMillis();
         for (int i = 0; i < count; i++) {
             action.accept(i);
