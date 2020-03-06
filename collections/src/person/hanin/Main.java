@@ -2,6 +2,7 @@ package person.hanin;
 
 import io.humb1t.Main.Order;
 import io.humb1t.Main.OrderStatus;
+import person.hanin.factorial.Factorial;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -16,7 +17,7 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-        task5();
+        task6();
     }
 
     private static void task1() {
@@ -77,7 +78,6 @@ public class Main {
          * For training purposes only
          */
         Queue<Integer> requestQueue = new ConcurrentLinkedQueue<>();
-        Queue<Integer> responseQueue = new ConcurrentLinkedQueue<>();
 
         ExecutorService exec = Executors.newCachedThreadPool();
 
@@ -92,21 +92,13 @@ public class Main {
                         try {
                             TimeUnit.MILLISECONDS.sleep(500L);
                             Optional<Integer> request = Optional.ofNullable(requestQueue.poll());
-                            request.ifPresent(item -> responseQueue.offer(item * 2));
+                            request.ifPresent(System.out::println);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
                 })
         );
-
-        // response printer
-        exec.execute(() -> {
-            while (true) {
-                Optional<Integer> response = Optional.ofNullable(responseQueue.poll());
-                response.ifPresent(System.out::println);
-            }
-        });
 
         // kill 'em all
         Timer timer = new Timer("Exit timer");
@@ -142,8 +134,8 @@ public class Main {
     }
 
     private static void task6() {
-        //TODO
-        Map<Long, Long> cache;
+        Factorial factorial = new Factorial();
+        System.out.println(factorial.calculate(10));
     }
 
     private static void timeIt(IntConsumer action, int count, String name) {
