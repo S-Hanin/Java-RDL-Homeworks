@@ -15,6 +15,8 @@ public class Factorial {
      */
     public Long calculate(int n) {
         if (n == 0) return 1L;
+        // TODO task1: Modify your Cache from previous task and return
+        //  Optional#empty instead of null if element is missing
         Optional<Long> cached = Optional.ofNullable(this.cache.get(n));
         //it's pretty convenient method
         Long result = cached.orElseGet(() -> n * calculate(n - 1));

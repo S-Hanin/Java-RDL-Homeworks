@@ -66,8 +66,9 @@ public class Main {
                 new Order(OrderStatus.PROCESSING, 40),
                 new Order(OrderStatus.COMPLETED, 30));
 
+        // TODO task2: Modify your filter algorithm, use new method and Streams API
         List<io.humb1t.Main.Order> ordersTopCount = orders.stream()
-                .filter(order -> order.getQuantity() > 40)
+                .filter(order -> order.quantityMoreThan(30))
                 .collect(Collectors.toList());
 
         ordersTopCount.forEach(System.out::println);

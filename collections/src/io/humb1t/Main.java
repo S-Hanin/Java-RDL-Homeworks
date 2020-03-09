@@ -36,10 +36,26 @@ public class Main {
 
     public static class Order {
         public final OrderStatus status;
+
         private Integer quantity;
 
         public Order(OrderStatus status, Integer quantity) {
             this.status = status;
+            this.quantity = quantity;
+        }
+
+        public Order(OrderStatus status){
+            this(status, 0);
+        }
+
+        // TODO task2: Modify your Order class, create method which would return boolean
+        //  depends on the value of numeric field (which was added in previous task)
+
+        public boolean quantityMoreThan(int quantity){
+            return this.quantity > quantity;
+        }
+
+        public void setQuantity(Integer quantity) {
             this.quantity = quantity;
         }
 
