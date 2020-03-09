@@ -1,5 +1,7 @@
 package io.humb1t;
 
+import person.hanin.CloseableResource;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,11 +13,12 @@ public class Main {
     public static void main(String[] args) {
         try {
             new LifeCycleAction().execute();
-        } catch (LifeCycleActionExecutionException | AccessDeniedException e) {
+        } catch (LifeCycleActionExecutionException | AccessDeniedException | MyShinyMetalException e) {
             System.err.println(e.getLocalizedMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
         try (FileInputStream fileInputStream = new FileInputStream(args[0])) {
 
         } catch (FileNotFoundException e) {
@@ -24,16 +27,6 @@ public class Main {
             e.printStackTrace();
         }
     }
-
-    public static class LifeCycleAction {
-        public void execute() throws LifeCycleActionExecutionException, AccessDeniedException {
-            throw new LifeCycleActionExecutionException();
-        }
-    }
-
-    public static class LifeCycleActionExecutionException extends Exception {
-    }
-
 
     public void exceptionVsResult() {
         final String result1 = (String) this.returnResult().value;
@@ -55,5 +48,20 @@ public class Main {
 
     private String returnValueOrThrowException() throws AccessDeniedException {
         return "OK";
+    }
+
+    public static class LifeCycleAction {
+        //TODO task1: add exception to `execute` method signature
+        public void execute() throws LifeCycleActionExecutionException,
+                AccessDeniedException, MyShinyMetalException {
+            throw new LifeCycleActionExecutionException();
+        }
+    }
+
+    public static class LifeCycleActionExecutionException extends Exception {
+    }
+
+    //TODO task1: create your own exception class
+    public static class MyShinyMetalException extends Exception {
     }
 }
