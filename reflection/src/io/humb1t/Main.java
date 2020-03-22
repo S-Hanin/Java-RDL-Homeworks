@@ -1,9 +1,6 @@
 package io.humb1t;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.TypeVariable;
+import java.lang.reflect.*;
 
 public class Main {
 
@@ -11,8 +8,8 @@ public class Main {
         Class c = new Order().getClass();
         Class os = OrderStatus.PROCESSING.getClass();
         Class primitiveClass = boolean.class;
-//        Class orderClassByName = Class.forName("io.humb1t.Main.Order");
-//        Class arrayClassByStrangeName = Class.forName("[L.io.humb1t.Main.Order;");
+        Class orderClassByName = Class.forName("io.humb1t.Main$Order");
+//        Class arrayClassByStrangeName = Class.forName("[L.io.humb1t.Order;");
         Class voidClass = Void.TYPE;
 
         final Class<Processor> processorClass = Processor.class;
@@ -25,19 +22,19 @@ public class Main {
 
         try {
             Class mainClass = Main.class;
-            Method mainMethod = c.getMethod("main");
+            Method mainMethod = mainClass.getMethod("main", String[].class);
         } catch (NoSuchMethodException x) {
             x.printStackTrace();
         }
 
         try {
             Class<?> mainClass = Main.class;
-            Method mainMethod = c.getMethod("main");
+            Method mainMethod = mainClass.getMethod("main", String[].class);
         } catch (NoSuchMethodException x) {
             x.printStackTrace();
         }
 
-        Class<?> classWithPrivateNoArgsConstructor = Class.forName("io.humb1t.Main.ClassWithPrivateNoArgsConstructor");
+        Class<?> classWithPrivateNoArgsConstructor = Class.forName("io.humb1t.Main$ClassWithPrivateNoArgsConstructor");
         try {
             classWithPrivateNoArgsConstructor.newInstance();
         } catch (InstantiationException e) {
@@ -47,7 +44,11 @@ public class Main {
         }
 
         try {
-            classWithPrivateNoArgsConstructor.getConstructor().newInstance();
+            Constructor<?> method = classWithPrivateNoArgsConstructor.getDeclaredConstructor();
+            method.setAccessible(true);
+            ClassWithPrivateNoArgsConstructor a =
+                    (ClassWithPrivateNoArgsConstructor) method.newInstance();
+            System.out.println(a.txt);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -58,21 +59,22 @@ public class Main {
             e.printStackTrace();
         }
     }
-
-    public enum OrderStatus {
+    enum OrderStatus {
         PROCESSING
     }
 
-    public static class Order {
+    private static class Order {
 
     }
 
-    protected class Processor<E> {
+    class Processor<E> {
         E processingElement;
     }
 
-    public class ClassWithPrivateNoArgsConstructor {
+    private static class ClassWithPrivateNoArgsConstructor {
+        String txt = "We have an instance of class with private constructor";
         private ClassWithPrivateNoArgsConstructor(){
         }
     }
+
 }
