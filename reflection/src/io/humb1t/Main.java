@@ -8,7 +8,7 @@ public class Main {
         Class c = new Order().getClass();
         Class os = OrderStatus.PROCESSING.getClass();
         Class primitiveClass = boolean.class;
-        Class orderClassByName = Class.forName("io.humb1t.Order");
+        Class orderClassByName = Class.forName("io.humb1t.Main$Order");
 //        Class arrayClassByStrangeName = Class.forName("[L.io.humb1t.Order;");
         Class voidClass = Void.TYPE;
 
@@ -34,7 +34,7 @@ public class Main {
             x.printStackTrace();
         }
 
-        Class<?> classWithPrivateNoArgsConstructor = Class.forName("io.humb1t.ClassWithPrivateNoArgsConstructor");
+        Class<?> classWithPrivateNoArgsConstructor = Class.forName("io.humb1t.Main$ClassWithPrivateNoArgsConstructor");
         try {
             classWithPrivateNoArgsConstructor.newInstance();
         } catch (InstantiationException e) {
@@ -59,22 +59,22 @@ public class Main {
             e.printStackTrace();
         }
     }
-}
-
-enum OrderStatus {
-    PROCESSING
-}
-
-class Order {
-
-}
-
-class Processor<E> {
-    E processingElement;
-}
-
-class ClassWithPrivateNoArgsConstructor {
-    String txt = "We have an instance of class with private constructor";
-    private ClassWithPrivateNoArgsConstructor(){
+    enum OrderStatus {
+        PROCESSING
     }
+
+    private static class Order {
+
+    }
+
+    class Processor<E> {
+        E processingElement;
+    }
+
+    private static class ClassWithPrivateNoArgsConstructor {
+        String txt = "We have an instance of class with private constructor";
+        private ClassWithPrivateNoArgsConstructor(){
+        }
+    }
+
 }
