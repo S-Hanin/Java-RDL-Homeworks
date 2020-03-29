@@ -1,15 +1,16 @@
 package State;
 
-public class GiveChangeState extends State {
-    public GiveChangeState(CoffeeMachine coffeeMachine) {
+class GiveChangeState extends State {
+    GiveChangeState(CoffeeMachine coffeeMachine) {
         super(coffeeMachine);
     }
 
     @Override
-    public void GiveChange(int MoneyAmount) {
-        System.out.printf("%s money for return\n", MoneyAmount);
-        if (MoneyAmount > 0 && MoneyAmount < coffeeMachine.deposit){
-            coffeeMachine.deposit -= MoneyAmount;
+    void GiveChange() {
+        Integer moneyAmount = coffeeMachine.deposit - coffeeMachine.menu.get(coffeeMachine.currentChoice);
+        if (moneyAmount > 0 && moneyAmount < coffeeMachine.deposit) {
+            System.out.printf("%s money for return\n", moneyAmount);
+            coffeeMachine.deposit -= moneyAmount;
             coffeeMachine.proceeds += coffeeMachine.deposit;
             coffeeMachine.deposit = 0;
         }

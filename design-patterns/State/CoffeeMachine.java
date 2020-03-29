@@ -4,12 +4,14 @@ import java.util.EnumMap;
 
 public class CoffeeMachine implements ICoffeeMachine {
 
-    State state;
+    CoffeeType currentChoice;
     Integer deposit = 0;
     Long proceeds = 0L;
-    EnumMap<CoffeeType, Integer> menu = new EnumMap<>(CoffeeType.class);
+    EnumMap<CoffeeType, Integer> menu;
+    private State state;
 
     {
+        menu = new EnumMap<>(CoffeeType.class);
         menu.put(CoffeeType.CAPPUCCINO, 10);
         menu.put(CoffeeType.AMERICANO, 5);
         menu.put(CoffeeType.ESPRESSO, 3);
@@ -31,8 +33,8 @@ public class CoffeeMachine implements ICoffeeMachine {
     }
 
     @Override
-    public void GiveChange(int MoneyAmount) {
-        state.GiveChange(MoneyAmount);
+    public void GiveChange() {
+        state.GiveChange();
     }
 
     @Override
@@ -52,7 +54,7 @@ public class CoffeeMachine implements ICoffeeMachine {
         System.out.println("Coffee machine stopped");
     }
 
-    public void changeState(State state) {
+    void changeState(State state) {
         System.out.printf("State changed to %s\n", state.getClass().getName());
         this.state = state;
     }

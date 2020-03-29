@@ -1,12 +1,12 @@
 package State;
 
-public class DeliverCoffeeState extends State {
-    public DeliverCoffeeState(CoffeeMachine coffeeMachine) {
+class DeliverCoffeeState extends State {
+    DeliverCoffeeState(CoffeeMachine coffeeMachine) {
         super(coffeeMachine);
     }
 
     @Override
-    public void DeliverCoffee() {
+    void DeliverCoffee() {
         System.out.println("Delivering coffee");
         coffeeMachine.changeState(new GiveChangeState(coffeeMachine));
     }

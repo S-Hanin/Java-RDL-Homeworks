@@ -1,21 +1,28 @@
 package State;
 
-public class ReadyState extends State {
-    public ReadyState(CoffeeMachine coffeeMachine) {
+class ReadyState extends State {
+    ReadyState(CoffeeMachine coffeeMachine) {
         super(coffeeMachine);
+        coffeeMachine.currentChoice = null;
     }
 
     @Override
-    public void Deposit(int MoneyAmount) {
-        if (MoneyAmount <= 0){
+    void Deposit(int moneyAmount) {
+        if (moneyAmount <= 0) {
             throw new IllegalArgumentException("unsupported money amount");
         }
-        coffeeMachine.deposit += MoneyAmount;
-        System.out.printf("%s money given. Current deposit %s", MoneyAmount, coffeeMachine.deposit);
+        coffeeMachine.deposit += moneyAmount;
+        System.out.printf("%s money given. Current deposit %s\n", moneyAmount, coffeeMachine.deposit);
     }
 
     @Override
-    public void PrepareCoffee(CoffeeType coffeeType) {
-        coffeeMachine.changeState(new MakingCoffeeState(coffeeMachine));
+    void PrepareCoffee(CoffeeType coffeeType) {
+        if (coffeeMachine.deposit <= coffeeMachine.menu.get(coffeeType)) {
+            System.out.println(String.format("Deposit is not enough for %s", coffeeType.name()));
+            return;
+        }
+        coffeeMachine.currentChoice = coffeeType;
+        System.out.println("Preparing coffee");
+        coffeeMachine.changeState(new DeliverCoffeeState(coffeeMachine));
     }
 }
