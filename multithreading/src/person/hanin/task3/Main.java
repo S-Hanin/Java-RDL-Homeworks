@@ -17,20 +17,24 @@ public class Main {
         int POISON = -1;
 
         Runnable producer = () -> {
-            IntStream.rangeClosed(0, 10000).forEach(x -> {
-                        try {
-                            queue.put(x);
-                        } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt();
-                        }
-                    }
-            );
-            queue.add(POISON);
+            try {
+                for (int i = 0; i < 10000; i++) {
+                    queue.put(i);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
+            try {
+                queue.put(POISON);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         };
 
         Runnable consumer = () -> {
             try {
-                while (true) {
+                while (!Thread.currentThread().isInterrupted()) {
                     int value = queue.take();
                     if (value == POISON) break;
                     System.out.println(value);
