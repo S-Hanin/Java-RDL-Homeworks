@@ -24,6 +24,7 @@ public class Main {
             System.out.println("4. Если ввели ФИО рядового сотрудника - то вывести только его зарплату. \n" +
                     "   Если ввели начальника подразделения - вывести список всех его подчинённых с указанием зарплаты и сортировкой по ФИО");
             printEmployerSalaryOrDependants(connection, "Андрей Пупкин");
+            printEmployerSalaryOrDependants(connection, "Елена Премудрая");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -67,6 +68,7 @@ public class Main {
         var query = connection.prepareStatement(sql);
         query.setString(1, fullname);
         var rs = query.executeQuery();
+//        Takes only first employer from result set
         if (rs.next()) {
             var result = rs.getBigDecimal("SALARY");
             rs.close();
