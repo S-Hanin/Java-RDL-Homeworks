@@ -1,0 +1,55 @@
+2020-04-13 14:54:17 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "EMPLOYER" не найдена
+Table "EMPLOYER" not found; SQL statement:
+drop table EMPLOYER [42102-200]
+2020-04-13 16:43:36 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Столбец "DEPARTMENT" не найден
+Column "DEPARTMENT" not found; SQL statement:
+select ID, FULLNAME, SALARY, DEPARTMENT from EMPLOYER order by FULLNAME [42122-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:453)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	at org.h2.message.DbException.get(DbException.java:205)
+	at org.h2.message.DbException.get(DbException.java:181)
+	at org.h2.expression.ExpressionColumn.getColumnException(ExpressionColumn.java:163)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:145)
+	at org.h2.command.dml.Select.prepare(Select.java:1206)
+	at org.h2.command.Parser.prepareCommand(Parser.java:744)
+	at org.h2.engine.Session.prepareLocal(Session.java:657)
+	at org.h2.engine.Session.prepareCommand(Session.java:595)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1235)
+	at org.h2.jdbc.JdbcStatement.executeQuery(JdbcStatement.java:78)
+	at dao.EmployerDao.getAllSortedByFullname(EmployerDao.java:82)
+	at Main.main(Main.java:30)
+2020-04-13 16:43:36 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT ID, FULLNAME, SALARY, DEPARTMENT FROM EMPLOYER ORDDER BY[*] SALARY"
+Syntax error in SQL statement "SELECT ID, FULLNAME, SALARY, DEPARTMENT FROM EMPLOYER ORDDER BY[*] SALARY"; SQL statement:
+select ID, FULLNAME, SALARY, DEPARTMENT from EMPLOYER ordder by SALARY [42000-200]
+2020-04-13 16:45:07 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT ID, FULLNAME, SALARY, DEPARTMENTID FROM EMPLOYER ORDDER BY[*] SALARY"
+Syntax error in SQL statement "SELECT ID, FULLNAME, SALARY, DEPARTMENTID FROM EMPLOYER ORDDER BY[*] SALARY"; SQL statement:
+select ID, FULLNAME, SALARY, DEPARTMENTID from EMPLOYER ordder by SALARY [42000-200]
+2020-04-14 02:38:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Неоднозначное имя столбца "ID"
+Ambiguous column name "ID"; SQL statement:
+select ID from DEPARTMENT d inner join EMPLOYER e on d.CHIEFID = e.ID WHERE e.FULLNAME = ? [90059-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:576)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	at org.h2.message.DbException.get(DbException.java:205)
+	at org.h2.message.DbException.get(DbException.java:181)
+	at org.h2.expression.ExpressionColumn.mapColumn(ExpressionColumn.java:129)
+	at org.h2.expression.ExpressionColumn.mapColumns(ExpressionColumn.java:107)
+	at org.h2.command.dml.Select.mapColumns(Select.java:1600)
+	at org.h2.command.dml.Select.init(Select.java:1125)
+	at org.h2.command.Parser.parseQuery(Parser.java:2627)
+	at org.h2.command.Parser.parsePrepared(Parser.java:868)
+	at org.h2.command.Parser.parse(Parser.java:843)
+	at org.h2.command.Parser.parse(Parser.java:815)
+	at org.h2.command.Parser.prepareCommand(Parser.java:738)
+	at org.h2.engine.Session.prepareLocal(Session.java:657)
+	at org.h2.engine.Session.prepareCommand(Session.java:595)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1235)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:76)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:352)
+	at Main.getChiefDepartmentId(Main.java:79)
+	at Main.printEmployerSalaryOrDependants(Main.java:52)
+	at Main.main(Main.java:21)
